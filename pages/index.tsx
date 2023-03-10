@@ -5,7 +5,14 @@ import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export async function getServerSideProps() {
+  const data = JSON.stringify({ time: new Date() });
+  return { props: { data } };
+}
+
+export default function Home({ data }: { data: { time: string } }) {
+  const serverData = JSON.parse(data);
+
   return (
     <>
       <Head>
@@ -18,7 +25,7 @@ export default function Home() {
         <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
+            <code className={styles.code}>pages/index.tsx</code> The time is {serverData.time}
           </p>
           <div>
             <a
